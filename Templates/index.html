@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Online Book Store</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container">
+
+<a class="navbar-brand" href="/">📚 BookStore</a>
+
+<form class="d-flex me-auto ms-4" method="GET" action="/">
+<input class="form-control me-2" type="search" name="search" placeholder="Search books">
+<button class="btn btn-outline-light">Search</button>
+</form>
+
+<ul class="navbar-nav">
+
+<li class="nav-item">
+<a class="nav-link" href="/">Home</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="/cart">
+Cart 🛒 <span class="badge bg-danger">{{cart_count or 0}}</span>
+</a>
+</li>
+
+{% if session.get("name") %}
+
+<li class="nav-item">
+<a class="nav-link" href="/orders">My Orders</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="/logout">Logout</a>
+</li>
+
+{% else %}
+
+<li class="nav-item">
+<a class="nav-link" href="/login">Login</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="/register">Register</a>
+</li>
+
+{% endif %}
+
+</ul>
+
+</div>
+</nav>
+
+
+<!-- WELCOME MESSAGE -->
+
+<div class="container mt-4">
+
+{% if session.get("name") %}
+
+<div class="alert alert-success text-center">
+
+<h4>👋 Welcome back, {{session["name"]}}!</h4>
+<p>Browse and buy your favorite books.</p>
+
+</div>
+
+{% else %}
+
+<div class="alert alert-info text-center">
+
+<h4>📚 Welcome to BookStore</h4>
+<p>Please login or register to start shopping.</p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+
+<!-- HERO SECTION -->
+
+<div class="container mt-4">
+
+<div class="p-5 mb-4 bg-light rounded-3">
+
+<div class="container-fluid py-5 text-center">
+
+<h1 class="display-5 fw-bold">📚 Discover Your Next Favorite Book</h1>
+
+<p class="fs-5">
+Browse bestselling books and grow your knowledge.
+</p>
+
+<a href="#books" class="btn btn-primary btn-lg">
+Explore Books
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- BOOK SECTION -->
+
+<div class="container mt-5">
+
+<h2 id="books" class="text-center mb-5 fw-bold">🔥 Popular Books</h2>
+
+<div class="row g-4">
+
+{% for book in books %}
+
+<div class="col-md-4">
+
+<div class="card shadow h-100">
+
+<img src="{{book.image}}" class="card-img-top">
+
+<div class="card-body text-center">
+
+<h5 class="card-title">{{book.title}}</h5>
+
+<p class="text-success fw-bold">${{book.price}}</p>
+
+<a href="/add_to_cart/{{book.id}}" class="btn btn-primary w-100">
+Add to Cart
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+
+</body>
+
+</html>
