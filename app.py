@@ -223,5 +223,15 @@ def orders():
     orders = cursor.fetchall()
 
     return render_template("orders.html", orders=orders)
+@app.route("/subscribe", methods=["POST"])
+def subscribe():
+
+    email = request.form["email"]
+
+    sql = "INSERT INTO subscribers(email) VALUES(%s)"
+    cursor.execute(sql,(email,))
+    db.commit()
+
+    return "<h3 style='text-align:center;margin-top:50px'>✅ Thank you for subscribing!</h3>"
 if __name__ == "__main__":
     app.run(debug=True)
